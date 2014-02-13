@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>  
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+
+  <link rel="stylesheet" href="http://sharepointsite/SiteAssets/filter/css/chosen.css">
+  <link rel="stylesheet" href="http://sharepointsite/SiteAssets/filter/css/prism.css">
+  <script src="http://sharepointsite/SiteAssets/filter/js/prism.js" type="text/javascript"></script>
+  <script src="http://sharepointsite/SiteAssets/filter/js/chosen.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+  <style type="text/css" media="all">
+    /* fix rtl for demo */
+    .chosen-rtl .chosen-drop { left: -9000px; }
+  </style>
+  <script type="text/javascript">
+      $(document).ready(function () {
+
+          //Resize all the filter boxes
+          $('.filter-box').css({ "width": "250px" });
+
+          //This function does the filtering of the list view.
+          function filterList(value)
+          {
+              $dataCell = $(".ms-itmhover:not(:contains('" + value + "'))");
+              $dataCell.hide(500);
+          }
+            
+          //Filter list based on PSL
+          $('.priority-filter').chosen().change(function () {
+              //Get value for button clicked
+              var value = $(".priority-filter option:selected").text();
+              filterList(value);
+          });
+	  
+          //Filter list based on category
+          $('.status-filter').chosen().change(function () {
+              //Get value for button clicked
+              var value = $(".status-filter option:selected").text();
+              filterList(value);
+          });
+	  
+          $('.resetFilter').click(function () {
+              //Show all items, clear all filters.
+              $(".ms-itmhover").show(1000);
+
+              $(".priority-filter option:selected").removeAttr('selected');
+              $(".priority-filter").trigger("chosen:updated");
+
+              $('.status-filter option:selected').removeAttr('selected');
+              $('.status-filter').trigger('chosen:updated');
+          });
+      
+	});
+  </script>
+  </head>
+  <body>
+         <div>
+         <select data-placeholder="Select Priority..." class="priority-filter filter-box" tabindex="2">
+            <option value=""></option>
+            <option>High</option>
+            <option>Normal</option>
+            <option>Low</option>
+          </select>
+		  
+		 <select data-placeholder="Select Status..." class="status-filter filter-box" tabindex="2">
+            <option value=""></option>
+            <option>In Progress</option>
+            <option>Not Started</option>
+            <option>Completed</option>
+            <option>Deferred</option>
+            <option>Waiting for someone</option>
+         </select>
+        
+		<input class="resetFilter" type="button" value="Reset Filters"></input>
+		</div>
+</body>
+</html>
